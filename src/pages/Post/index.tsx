@@ -1,19 +1,17 @@
 import { useParams } from "react-router-dom";
 import { PostInfo } from "../../components/PostInfo";
 import { Content, TextLink, Text, Footer } from "./styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { api } from "../../lib/axios";
+import { PublicationProps } from "../../@types/publicationProps";
+import { PublicationContext } from "../../contexts/PublicationContext";
 
-interface PublicationProps{
-    title?: string;
-    created_at?: string;
-    body?: string;
-}
 
 export function Post (){
 
     const { number } = useParams();
     const [publications, setPublications] = useState<PublicationProps>();
+    //const { publications } = useContext(PublicationContext)
     
     const name = "lourenso-sofecia";
     const repo = "ls-github-blog-web";
@@ -22,7 +20,7 @@ export function Post (){
         try {
             const response = await api.get(`repos/${name}/${repo}/issues/${number}`);
             setPublications(response.data);
-            console.log(publications, "publicationsee");
+           // console.log(publications, "publicationsee");
 
         }
         catch (error) {
@@ -36,7 +34,7 @@ export function Post (){
     useEffect(()=>{
 
         fetchPublications();
-        console.log(publications, "publicationse");
+        //console.log(publications, "publicationse");
     }, [])
     
     return (

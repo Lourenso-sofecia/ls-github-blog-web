@@ -13,12 +13,13 @@ interface PublicationContextType {
 }
 
 interface PublicationProviderProps {
+    use: PublicationUser
     children: ReactNode;
 }
 
 export const PublicationContext = createContext({} as PublicationContextType);
 
-export function PublicationProvider({ children}: PublicationProviderProps){
+export function PublicationProvider({ children, use}: PublicationProviderProps){
 
     const [publications, setPublications] = useState<PublicationUser[]>([]);
     
@@ -27,9 +28,18 @@ export function PublicationProvider({ children}: PublicationProviderProps){
 
     async function fetchPublications(query?: string){
         try {
-            const response = await api.get(`repos/${name}/${repo}/issues`);
+            let response;
+            if(use?.number){
+                response = await api.get(`repos/${name}/${repo}/issues`);
+
+            }
+            else{
+                response = await api.get(`repos/${name}/${repo}/issues`);
+
+            }
+            //const response = await api.get(`repos/${name}/${repo}/issues`);
             setPublications(response.data);
-            console.log(publications, "publications");
+            //console.log(publications, "publications");
 
         }
         catch (error) {
@@ -43,7 +53,7 @@ export function PublicationProvider({ children}: PublicationProviderProps){
     useEffect(()=>{
 
         fetchPublications();
-        console.log(publications, "publications");
+        //console.log(publications, "publications");
     }, [])
 
 

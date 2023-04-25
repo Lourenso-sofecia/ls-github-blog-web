@@ -5,6 +5,7 @@ import { Article, CardsContainer, SearchFormContainer, StyledNavLink } from "./s
 import { useContext, useEffect, useState } from "react";
 import { api } from "../../lib/axios";
 import { PublicationContext } from "../../contexts/PublicationContext";
+import { PublicationProps } from "../../@types/publicationProps";
 
 
 interface Users{
@@ -13,12 +14,6 @@ interface Users{
     login: string,
     url: string,
     followers: string,
-}
-interface PublicationProps{
-    number?: number;
-    title?: string;
-    created_at?: string;
-    body?: string;
 }
 export function Home (){
     const { publications } = useContext(PublicationContext)
@@ -49,7 +44,7 @@ export function Home (){
 
     const filtered = valueSearched ? publications.filter((item: PublicationProps) => item?.body?.includes(valueSearched)) : publications;
 
-    console.log("filtered", filtered, "filteredss");
+    //console.log("filtered", filtered, "filteredss");
 
 
     return (
