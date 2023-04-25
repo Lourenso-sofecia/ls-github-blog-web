@@ -30,8 +30,7 @@ export function SearchForm() {
   return (
     <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
       <input type="text" placeholder="Buscar conteúdo" {...register('query')} />
-
-      
+    
     </SearchFormContainer>
   );
 }

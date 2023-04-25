@@ -9,7 +9,13 @@ import calendarDaySolid from '../../assets/svg/calendar-day-solid.svg'
 import { ContentText, Footer, Header, Info, PostInfoContainer } from './styles'
 import { NavLink } from 'react-router-dom'
 
-export function PostInfo(){
+interface PublicationProps{
+    title?: string;
+    created_at?: string;
+    body?: string;
+}
+
+export function PostInfo({ title }: PublicationProps){
     return (
         <PostInfoContainer>
             <div>
@@ -26,7 +32,7 @@ export function PostInfo(){
                     </NavLink>
                 </Header>
                 <ContentText>
-                    JavaScript data types and data structures
+                    {title}
                 </ContentText>
                 <Footer>
                     <Info>

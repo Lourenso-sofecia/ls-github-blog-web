@@ -3,11 +3,11 @@ import { CardContainer, Header } from "./styles";
 interface PublicationProps{
     number?: number;
     title?: string;
-    comments_url?: string;
     created_at?: string;
+    body?: string;
 }
 
-export function Card({number, title, comments_url, created_at}: PublicationProps){
+export function Card({number, title, body, created_at}: PublicationProps){
     return(
         <CardContainer>
             <Header>
@@ -19,9 +19,7 @@ export function Card({number, title, comments_url, created_at}: PublicationProps
                 </span>
             </Header>
             <p>
-                Programming languages all have built-in data structures, but these often differ from one 
-                language to another. This article attempts to list the built-in data structures 
-                available in...
+                {body}
             </p>
         </CardContainer>
     )

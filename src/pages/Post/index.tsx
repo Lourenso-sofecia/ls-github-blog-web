@@ -1,28 +1,66 @@
+import { useParams } from "react-router-dom";
 import { PostInfo } from "../../components/PostInfo";
 import { Content, TextLink, Text, Footer } from "./styles";
+import { useEffect, useState } from "react";
+import { api } from "../../lib/axios";
+
+interface PublicationProps{
+    title?: string;
+    created_at?: string;
+    body?: string;
+}
 
 export function Post (){
+
+    const { number } = useParams();
+    const [publications, setPublications] = useState<PublicationProps>();
+    
+    const name = "lourenso-sofecia";
+    const repo = "ls-github-blog-web";
+
+    async function fetchPublications(query?: string){
+        try {
+            const response = await api.get(`repos/${name}/${repo}/issues/${number}`);
+            setPublications(response.data);
+            console.log(publications, "publicationsee");
+
+        }
+        catch (error) {
+            console.error("Erro ao obter os usuários:", error);
+            <div>
+                ERRO, Na API
+            </div>
+        }        
+    }
+
+    useEffect(()=>{
+
+        fetchPublications();
+        console.log(publications, "publicationse");
+    }, [])
+    
     return (
         <main>
-            <PostInfo />
+            <PostInfo
+                title={publications?.title}
+            />
             <Content>
                 <Text>
-                    Programming languages all have built-in data structures, but these often differ 
-                    from one language to another. This article attempts to list the built-in data 
-                    structures available in JavaScript and what properties they have. These can 
-                    be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
+                {publications?.body}
+                    
                 </Text>
-                
-                <TextLink to = "/">
-                    Dynamic typing
-                </TextLink>
+                {/*
+                    <TextLink to = "/">
+                        Dynamic typing
+                    </TextLink>
 
-                <Text>
-                    JavaScript is a loosely typed and dynamic language. Variables in JavaScript 
-                    are not directly associated with any particular value type, and any variable 
-                    can be assigned and re-assigned values of all types:
+                    <Text>
+                        JavaScript is a loosely typed and dynamic language. Variables in JavaScript 
+                        are not directly associated with any particular value type, and any variable 
+                        can be assigned and re-assigned values of all types:
 
-                </Text>
+                    </Text>
+                */}
                 <Footer>
                     <div>
                         let foo =  42;   // foo is now a number

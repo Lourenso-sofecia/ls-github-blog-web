@@ -34,3 +34,30 @@ export const StyledNavLink = styled(NavLink)`
     border: none;
     
 `;
+
+
+export const SearchFormContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  
+  input {
+    flex: 1;
+    border-radius: 6px;
+    border: 0;
+    background: ${props => props.theme["base-input"]};
+    color: ${props => props.theme["base-label"]};
+    padding: 1rem;
+    border: 1px solid ${props => props.theme["base-border"]};
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 160%;
+
+    &::placeholder {
+      //color: ${props => props.theme["base-text"]};
+    }
+  }
+
+`
