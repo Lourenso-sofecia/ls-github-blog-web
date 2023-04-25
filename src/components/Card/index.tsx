@@ -1,14 +1,21 @@
 import { CardContainer, Header } from "./styles";
 
-export function Card(){
+interface PublicationProps{
+    number?: number;
+    title?: string;
+    comments_url?: string;
+    created_at?: string;
+}
+
+export function Card({number, title, comments_url, created_at}: PublicationProps){
     return(
         <CardContainer>
             <Header>
                 <h3>
-                    JavaScript data types and data structures
+                    {title}
                 </h3>
                 <span>
-                    Há 1 dia
+                    {created_at}Há 1 dia
                 </span>
             </Header>
             <p>

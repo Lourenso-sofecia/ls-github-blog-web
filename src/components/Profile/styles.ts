@@ -15,6 +15,13 @@ export const Avatar = styled.div`
     height: 9.25rem;
     border-radius: 8px;
     margin-right: 2rem;
+    img {
+        width: 9.25rem;
+        height: 9.25rem;
+        border-radius: 8px;
+        margin-right: 2rem;
+
+    }
 `;
 
 export const Header = styled.header`
