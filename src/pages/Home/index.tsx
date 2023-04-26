@@ -2,62 +2,34 @@ import { Link, NavLink } from "react-router-dom";
 import { Card } from "../../components/Card";
 import { Profile } from "../../components/Profile";
 import { Article, CardsContainer, SearchFormContainer, StyledNavLink } from "./styles";
-import { useContext, useEffect, useState } from "react";
-import { api } from "../../lib/axios";
+import { useContext, useState } from "react";
 import { PublicationContext } from "../../contexts/PublicationContext";
 import { PublicationProps } from "../../@types/publicationProps";
 
 
-interface Users{
-    userName: string;
-    avatar_url: string,
-    login: string,
-    url: string,
-    followers: string,
-}
 export function Home (){
-    const { publications } = useContext(PublicationContext)
-    const [users, setUsers] = useState<Users>();
+    const { publications, } = useContext(PublicationContext);
     const [valueSearched, setValueSearched] = useState("");
 
-    
-    const name = "lourenso-sofecia";
-    const repo = "ls-github-blog-web";
-
-    async function fetchUsers(){
-        try {
-            const response = await api.get(`users/${name}`);
-            setUsers(response.data);
-        }
-        catch (error) {
-            console.error("Erro ao obter os usuários:", error);
-            <div>
-                ERRO, Na API
-            </div>
-        }        
-    }
-
-    useEffect(()=>{
-
-        fetchUsers();
-    }, [])
-
-    const filtered = valueSearched ? publications.filter((item: PublicationProps) => item?.body?.includes(valueSearched)) : publications;
-
-    //console.log("filtered", filtered, "filteredss");
-
-
+    const user = publications[0]?.user;
+   
+    const filtered = valueSearched
+    ? publications.filter((item: PublicationProps) =>
+        (item?.body?.toLowerCase().includes(valueSearched.toLowerCase())) ||
+        (item?.title?.toLowerCase().includes(valueSearched.toLowerCase()))
+      )
+    : publications;
+  
     return (
         <main>
             <Profile
-                avatar_url= {users?.avatar_url}
-                login = {users?.login}
-                url = {users?.url}
-                followers_url= {users?.followers}                
+                avatar_url= {user?.avatar_url}
+                login = {user?.login}
+                url = {user?.url}              
             />
             <Article>
                 <h4>Publicações</h4>
-                <p>{publications?.[0]?.number} publicações</p>
+                <p>{publications.length ? publications?.[0]?.number : 0} publicações</p>
             </Article>
 
             <SearchFormContainer>
@@ -81,9 +53,9 @@ export function Home (){
                                             return(
                                                 <StyledNavLink key={publication?.number} to={`/post/${publication?.number}`}>
                                                     <Card 
-                                                        key ={publication?.number}
                                                         body ={publication?.body}
                                                         title={publication?.title}
+                                                        updated_at={publication?.updated_at}
                                                     />
                                                 </StyledNavLink>
                                             )
@@ -99,7 +71,7 @@ export function Home (){
                 :
                     <div>
                         <h2>
-                            Sem item no Issues
+                            Sem item no Issues desse Repo
                         </h2>
                     </div>
             }

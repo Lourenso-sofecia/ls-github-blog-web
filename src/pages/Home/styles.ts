@@ -32,6 +32,7 @@ export const CardsContainer = styled.div`
 export const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     border: none;
+    color: ${props => props.theme["base-span"]};
     
 `;
 

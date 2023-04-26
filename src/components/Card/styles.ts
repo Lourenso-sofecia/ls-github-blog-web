@@ -29,15 +29,17 @@ export const Header = styled.header`
     justify-content: space-between;
 
     margin-bottom: 1.2rem;
-    
+    h3 {
+    }
     span {
         font-style: normal;
         font-weight: 400;
         font-size: 0.875rem;
         line-height: 160%;
         color: ${props => props.theme["base-span"]};
-        display: flex;
-        width: 83px;
+        
+
+        white-space:nowrap;
     }
 
 `;

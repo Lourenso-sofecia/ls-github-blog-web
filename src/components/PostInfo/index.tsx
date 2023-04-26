@@ -8,14 +8,18 @@ import calendarDaySolid from '../../assets/svg/calendar-day-solid.svg'
 
 import { ContentText, Footer, Header, Info, PostInfoContainer } from './styles'
 import { NavLink } from 'react-router-dom'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 interface PublicationProps{
     title?: string;
     created_at?: string;
+    updated_at?: Date;
     body?: string;
+    comments_url?: string;
 }
 
-export function PostInfo({ title }: PublicationProps){
+export function PostInfo({ title, updated_at, comments_url }: PublicationProps){
     return (
         <PostInfoContainer>
             <div>
@@ -38,19 +42,22 @@ export function PostInfo({ title }: PublicationProps){
                     <Info>
                         <img src={githubBrands} alt="" />
                         <span>
-                            cameronwll
+                            {"Lourenso-sofecia"}
                         </span>
                     </Info>
                     <Info>
                         <img src={calendarDaySolid} alt="" />
                         <span>
-                            Há 1 dia
+                        {updated_at && formatDistanceToNow(new Date(updated_at), {
+                            addSuffix: true,
+                            locale: ptBR,
+                            })}
                         </span>
                     </Info>
                     <Info>
                         <img src={commentSolid} alt="" />
                         <span>
-                            5 comentários
+                            {comments_url} comentários
                         </span>
                     </Info>
                     

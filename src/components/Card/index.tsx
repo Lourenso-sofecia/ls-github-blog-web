@@ -1,25 +1,38 @@
+import { formatDistanceToNow } from "date-fns";
 import { CardContainer, Header } from "./styles";
+import { ptBR } from "date-fns/locale";
 
 interface PublicationProps{
     number?: number;
     title?: string;
     created_at?: string;
-    body?: string;
+    updated_at?: Date;
+    body?: string; // | undefined | null;
 }
 
-export function Card({number, title, body, created_at}: PublicationProps){
+export function Card({number, title, body, created_at, updated_at}: PublicationProps){
+    
+    const maxLength = 181; // Número máximo de caracteres a serem exibidos
+    let truncatedText = "";
+    if (body) {
+      truncatedText = body.length > maxLength ? body.slice(0, maxLength) + "..." : body;
+    }
+
     return(
         <CardContainer>
             <Header>
                 <h3>
                     {title}
                 </h3>
-                <span>
-                    {created_at}Há 1 dia
+                <span >
+                    {updated_at && formatDistanceToNow(new Date(updated_at), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
                 </span>
             </Header>
             <p>
-                {body}
+                {truncatedText}
             </p>
         </CardContainer>
     )

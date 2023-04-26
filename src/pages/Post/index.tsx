@@ -16,11 +16,10 @@ export function Post (){
     const name = "lourenso-sofecia";
     const repo = "ls-github-blog-web";
 
-    async function fetchPublications(query?: string){
+    async function fetchPublications(){
         try {
             const response = await api.get(`repos/${name}/${repo}/issues/${number}`);
             setPublications(response.data);
-           // console.log(publications, "publicationsee");
 
         }
         catch (error) {
@@ -34,13 +33,14 @@ export function Post (){
     useEffect(()=>{
 
         fetchPublications();
-        //console.log(publications, "publicationse");
     }, [])
-    
+
     return (
         <main>
             <PostInfo
                 title={publications?.title}
+                updated_at={publications?.updated_at}
+                comments_url={publications?.comments}
             />
             <Content>
                 <Text>

@@ -1,20 +1,45 @@
-import avatar from '../../assets/svg/avatar.svg'
+import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { api } from '../../lib/axios'
+
 import github from '../../assets/svg/github.svg'
 import githubBrands from '../../assets/svg/github-brands.svg'
 import buildingSolid from '../../assets/svg/building-solid.svg'
 import userGroupSolid from '../../assets/svg/user-group-solid.svg'
 
 import { Avatar, ContentText, Footer, Header, Info, ProfileContainer } from './styles'
-import { NavLink } from 'react-router-dom'
 
 interface UserProfile{
     avatar_url: string | undefined,
     login: string | undefined,
     url: string | undefined,
-    followers_url: string | undefined,
+    followers?: string | undefined,
+    company?: string | undefined,
+    name?: string | undefined,
 }
 
-export function Profile({avatar_url, login, url, followers_url}: UserProfile){
+export function Profile({avatar_url, login}: UserProfile){
+    const [userInfo, setUserInfo] = useState<UserProfile>();
+
+    async function fetchUserInfo(){
+    
+        const name = "Lourenso-sofecia";
+
+        try {
+            const response = await api.get(`users/${name}`);
+            setUserInfo(response.data);
+        }
+        catch (error) {
+            console.error("Erro ao obter os usuários:", error);
+            <div>
+                ERRO, NA API
+            </div>
+        }        
+    }
+    useEffect(()=>{
+        fetchUserInfo();
+    }, [])
+
     return (
         <ProfileContainer>
             <Avatar>
@@ -42,20 +67,29 @@ export function Profile({avatar_url, login, url, followers_url}: UserProfile){
                     <Info>
                         <img src={githubBrands} alt="" />
                         <span>
-                            cameronwll
+                            {userInfo?.name ? userInfo?.name : "Lourenso-sofecia"}
                         </span>
                     </Info>
                     <Info>
                         <img src={buildingSolid} alt="" />
                         <span>
-                            Rocketseat
+                            {userInfo?.company ? userInfo?.company : "WithOut Company"}
                         </span>
                     </Info>
                     <Info>
                         <img src={userGroupSolid} alt="" />
                         <span>
-                            {followers_url} seguidores
+                            {userInfo?.followers && typeof userInfo.followers === "number" ? (
+                                userInfo.followers > 1 ? (
+                                `${userInfo.followers} seguidores`
+                                ) : (
+                                `${userInfo.followers} seguidor`
+                                )
+                            ) : (
+                                "Seguidor não disponível"
+                            )}
                         </span>
+
                     </Info>
                 </Footer>
             </div>

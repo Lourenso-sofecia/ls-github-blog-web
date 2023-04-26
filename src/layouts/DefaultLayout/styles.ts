@@ -13,4 +13,5 @@ export const MainContainer = styled.main`
   width: 54rem;
   margin: 0 auto;
   border-radius: 10px;
+  
 `;
